@@ -1,0 +1,21 @@
+{
+  "name": "checklist-monorepo",
+  "version": "1.0.0",
+  "description": "Professional checklist web application with React and Node.js",
+  "private": true,
+  "scripts": {
+    "install-all": "npm install && npm install --prefix server && npm install --prefix client",
+    "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "build": "npm --prefix server run build && npm --prefix client run build",
+    "server": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "typecheck": "npm --prefix server run typecheck && npm --prefix client run typecheck"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
