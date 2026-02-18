@@ -1,33 +1,32 @@
-import React from 'react';
-import { ChecklistTask, TimeframeType } from '../../../shared/types';
+import { FC } from 'react';
+import { ChecklistTask, UpdateTaskRequest } from '../../../shared/types';
 import { ChecklistItem } from './ChecklistItem';
 
 interface ChecklistViewProps {
   tasks: ChecklistTask[];
-  timeframe: TimeframeType;
   onToggleComplete: (id: string, completed: boolean) => void;
   onDelete: (id: string) => void;
+  onEdit: (id: string, data: UpdateTaskRequest) => void;
   isLoading: boolean;
-  layoutAlignment: 'left' | 'right';
 }
 
-export const ChecklistView: React.FC<ChecklistViewProps> = ({
+export const ChecklistView: FC<ChecklistViewProps> = ({
   tasks,
   onToggleComplete,
   onDelete,
+  onEdit,
   isLoading,
-  layoutAlignment,
 }) => {
   return (
-    <div className={`space-y-3 layout-${layoutAlignment}`}>
+    <div className="task-list">
       {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full" />
+        <div className="task-list__loader">
+          <div className="task-list__spinner" />
         </div>
       ) : tasks.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-slate-500 text-base">No tasks yet</p>
-          <p className="text-slate-400 text-sm">Create your first task to get started</p>
+        <div className="task-list__empty">
+          <p className="task-list__empty-title">No tasks yet</p>
+          <p className="task-list__empty-subtitle">Create your first task to get started</p>
         </div>
       ) : (
         tasks.map((task) => (
@@ -36,6 +35,7 @@ export const ChecklistView: React.FC<ChecklistViewProps> = ({
             task={task}
             onToggleComplete={onToggleComplete}
             onDelete={onDelete}
+            onEdit={onEdit}
           />
         ))
       )}

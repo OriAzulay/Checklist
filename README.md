@@ -25,6 +25,7 @@ checklist/
 ### Tech Stack
 
 **Frontend:**
+
 - React 19
 - Vite
 - TypeScript
@@ -33,6 +34,7 @@ checklist/
 - TanStack Query (React Query)
 
 **Backend:**
+
 - Node.js
 - Express
 - TypeScript
@@ -41,22 +43,26 @@ checklist/
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+ and npm 9+
 - Docker & Docker Compose (optional)
 
 ### Local Development
 
 1. **Install all dependencies:**
+
    ```bash
    npm run install-all
    ```
 
 2. **Start both services:**
+
    ```bash
    npm run dev
    ```
 
    Or run individually:
+
    ```bash
    npm run server  # Terminal 1
    npm run client  # Terminal 2
@@ -73,6 +79,7 @@ docker-compose up
 ```
 
 This starts:
+
 - Frontend on port 5173
 - Backend on port 3000
 
@@ -96,6 +103,7 @@ server/
 ```
 
 **API Endpoints:**
+
 - `GET /api/tasks` - List tasks (with optional filters)
 - `GET /api/tasks/:id` - Get single task
 - `POST /api/tasks` - Create task
@@ -125,6 +133,7 @@ client/
 ### `/shared` - Shared Types
 
 TypeScript interfaces used by both client and server:
+
 - `ChecklistTask`
 - `CreateTaskRequest`
 - `UpdateTaskRequest`
@@ -134,12 +143,14 @@ TypeScript interfaces used by both client and server:
 ## 🎨 Design Features
 
 ### Visual Feedback for Completed Tasks
+
 - Text becomes transparent (opacity-60)
 - Background fades (opacity-70)
 - Strikethrough text styling
 - Smooth transitions
 
 ### Task Alignment
+
 - **Left align**: Collapse to the left with reduced width
 - **Center align**: Default centered position
 - **Right align**: Expand to the right with reduced visual prominence
@@ -148,27 +159,32 @@ TypeScript interfaces used by both client and server:
 ## 🔄 Task Management Logic
 
 ### Daily Tasks
+
 - Each day, the date is automatically updated
 - Uncompleted tasks from previous days carry forward
 - Completed tasks remain visible but faded
 
 ### Monthly Tasks
+
 - Monthly view groups all tasks for the calendar month
 - Same rollover logic applies
 - Progress tracking shows completion percentage
 
 ### Yearly Tasks
+
 - Full year view with date-based organization
 - Persistent carry-forward for uncompleted items
 
 ## 🛠️ Development
 
 ### Build
+
 ```bash
 npm run build
 ```
 
 ### Type Checking
+
 ```bash
 npm run typecheck
 ```
@@ -176,6 +192,7 @@ npm run typecheck
 ### Environment Variables
 
 **Server (.env):**
+
 ```env
 PORT=3000
 NODE_ENV=development
@@ -183,6 +200,7 @@ ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
 ```
 
 **Client (.env):**
+
 ```env
 VITE_API_URL=http://localhost:3000/api
 ```
@@ -190,6 +208,7 @@ VITE_API_URL=http://localhost:3000/api
 ## 📦 API Request/Response Examples
 
 ### Create Task
+
 ```bash
 POST /api/tasks
 Content-Type: application/json
@@ -203,6 +222,7 @@ Content-Type: application/json
 ```
 
 ### Update Task
+
 ```bash
 PATCH /api/tasks/:id
 Content-Type: application/json
@@ -218,6 +238,7 @@ Content-Type: application/json
 All endpoints return consistent response formats:
 
 **Success:**
+
 ```json
 {
   "success": true,
@@ -226,6 +247,7 @@ All endpoints return consistent response formats:
 ```
 
 **Error:**
+
 ```json
 {
   "success": false,
@@ -237,6 +259,7 @@ All endpoints return consistent response formats:
 ## 🔐 Data Validation
 
 All requests are validated using Zod schemas:
+
 - Task title: Required, max 255 characters
 - Description: Optional, max 1000 characters
 - Timeframe: Must be 'daily', 'monthly', or 'yearly'

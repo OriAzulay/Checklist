@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   1. Reset / Base
+   ========================================================================== */
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -14,61 +18,136 @@ html {
 }
 
 body {
-  @apply bg-slate-50 min-h-screen;
-  color: #1E293B;
-}
-
-/* Remove browser default styles */
-input:checked {
-  @apply appearance-none;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
 
 select,
 textarea {
-  @apply appearance-none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
-  @apply w-2;
+  width: 0.5rem;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-slate-100;
+  background-color: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded;
+  background-color: var(--surface-3);
+  border-radius: 0.25rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-400;
+  background-color: var(--surface-4);
 }
 
-/* Details/Summary Accordion Pattern */
-.details {
+/* ==========================================================================
+   2. CSS Variables
+   ========================================================================== */
+
+:root {
+  --bg:        #0b1440;
+  --surface-1: #0e1a4a;
+  --surface-2: #0f1b4d;
+  --surface-3: #13235c;
+  --surface-4: #182c6a;
+  --surface-5: #1d3476;
+  --surface-6: #223c82;
+  --surface-7: #2a4691;
+  --surface-8: #3651a1;
+  --surface-9: #415db2;
+
+  --text:       #e3e7ff;
+  --text-muted: #b8c0ff;
+  --text-dim:   #9aa4e6;
+  --text-faint: #7f8ad1;
+  --text-bright:#e8ebff;
+
+  --accent-1: #ff7aa8;
+  --accent-2: #f268a0;
+  --accent-3: #e25997;
+  --accent-4: #cf4a8c;
+  --accent-5: #b53f7c;
+
+  --trans-dur: 0.25s;
+  --ease-bounce: cubic-bezier(0.65, 0, 0.35, 1.65);
+}
+
+/* ==========================================================================
+   3. Layout
+   ========================================================================== */
+
+.app {
+  min-height: 100vh;
+  background-color: var(--bg);
+}
+
+.header {
+  background-color: var(--surface-1);
+  border-bottom: 1px solid var(--surface-7);
+}
+
+.header__inner {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toolbar__date {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toolbar__separator {
+  color: var(--text-faint);
+}
+
+.main {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ==========================================================================
+   4. Tabs
+   ========================================================================== */
+
+.tabs {
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  background-color: #ECE6E0;
+  background-color: var(--surface-2);
   border-radius: 0.5rem;
   overflow: clip;
+  margin-bottom: 1.5rem;
 }
 
-.details__item {
+.tabs__item {
   display: contents;
 }
 
-.details__item[open] .details__link {
-  background-color: #fff;
-  border-radius: 0.5rem 0.5rem 0 0;
-  pointer-events: none;
-}
-
-.details__link {
+.tabs__link {
   display: block;
   padding: 0.5rem 1.5rem;
-  background-color: #ECE6E0;
+  background-color: var(--surface-2);
   border-radius: 0;
   list-style: none;
   order: 0;
@@ -80,56 +159,100 @@ textarea {
   border: none;
   font-size: inherit;
   font-family: inherit;
-  color: inherit;
+  color: var(--text-muted);
   transition: background-color 0.3s ease;
 }
 
-.details__link:hover {
-  background-color: #f5ede4;
+.tabs__link:hover {
+  background-color: var(--surface-7);
 }
 
-.details__item[open] .details__link:hover {
-  background-color: #fff;
+.tabs__item[open] .tabs__link {
+  background-color: var(--surface-3);
+  border-radius: 0.5rem 0.5rem 0 0;
+  pointer-events: none;
 }
 
-.details__body {
-  order: 1;
-  padding: 2rem;
-  width: 100%;
-  background-color: #ffffff;
+.tabs__item[open] .tabs__link:hover {
+  background-color: var(--surface-3);
 }
 
-/* Checkbox Card Component Styling */
-:root {
-  --hue: 223;
-  --sat1: 10%;
-  --sat2: 90%;
-  --light-gray1: hsl(var(--hue), var(--sat1), 95%);
-  --light-gray2: hsl(var(--hue), var(--sat1), 90%);
-  --light-gray3: hsl(var(--hue), var(--sat1), 85%);
-  --light-gray4: hsl(var(--hue), var(--sat1), 80%);
-  --light-gray5: hsl(var(--hue), var(--sat1), 75%);
-  --light-gray6: hsl(var(--hue), var(--sat1), 70%);
-  --light-gray7: hsl(var(--hue), var(--sat1), 65%);
-  --light-gray8: hsl(var(--hue), var(--sat1), 60%);
-  --light-gray9: hsl(var(--hue), var(--sat1), 55%);
-  --dark-gray1: hsl(var(--hue), var(--sat1), 45%);
-  --dark-gray2: hsl(var(--hue), var(--sat1), 40%);
-  --dark-gray3: hsl(var(--hue), var(--sat1), 35%);
-  --dark-gray4: hsl(var(--hue), var(--sat1), 30%);
-  --dark-gray5: hsl(var(--hue), var(--sat1), 25%);
-  --dark-gray6: hsl(var(--hue), var(--sat1), 20%);
-  --dark-gray7: hsl(var(--hue), var(--sat1), 15%);
-  --dark-gray8: hsl(var(--hue), var(--sat1), 10%);
-  --dark-gray9: hsl(var(--hue), var(--sat1), 5%);
-  --primary1: hsl(var(--hue), var(--sat2), 70%);
-  --primary2: hsl(var(--hue), var(--sat2), 60%);
-  --primary3: hsl(var(--hue), var(--sat2), 50%);
-  --primary4: hsl(var(--hue), var(--sat2), 40%);
-  --primary5: hsl(var(--hue), var(--sat2), 30%);
-  --trans-dur: 0.25s;
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1.65);
+/* ==========================================================================
+   5. Buttons
+   ========================================================================== */
+
+.icon-button {
+  padding: 0.375rem;
+  border-radius: 0.375rem;
+  color: var(--text-muted);
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
+
+.icon-button:hover {
+  background-color: var(--surface-7);
+  color: var(--text);
+}
+
+.icon-button__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.layout-button {
+  background-color: transparent;
+  color: var(--text);
+  padding: 0.375rem;
+  border-radius: 0.375rem;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.layout-button:hover {
+  opacity: 0.7;
+}
+
+.layout-button--active {
+  opacity: 1;
+}
+
+.layout-button__icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.add-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #5d5bff;
+  color: #ffffff;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-button:hover {
+  background-color: #4f4cf0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.add-button--disabled,
+.add-button--disabled:hover {
+  background-color: var(--surface-7);
+  color: var(--text-faint);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.add-button__icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ==========================================================================
+   6. Task Card
+   ========================================================================== */
 
 .task-card {
   position: relative;
@@ -139,25 +262,25 @@ textarea {
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background-color: var(--light-gray3);
+  background-color: var(--surface-3);
   border-radius: 0.75rem;
   box-shadow:
-    0 0 0 0.0625em var(--light-gray5) inset,
-    0 0 0 var(--light-gray2) inset,
-    0 0 0 var(--light-gray3);
+    0 0 0 0.0625em var(--surface-5) inset,
+    0 0 0 var(--surface-2) inset,
+    0 0 0 var(--surface-3);
   cursor: pointer;
   min-width: 0;
   height: 4.5rem;
   transition:
     background-color var(--trans-dur),
     box-shadow var(--trans-dur),
-    transform var(--trans-dur) var(--ease-in-out);
+    transform var(--trans-dur) var(--ease-bounce);
   -webkit-tap-highlight-color: transparent;
 }
 
 .task-card::before {
   border-radius: inherit;
-  box-shadow: 0 0 0 0.125em var(--primary3);
+  box-shadow: 0 0 0 0.125em var(--accent-3);
   content: "";
   display: block;
   opacity: 0;
@@ -168,85 +291,147 @@ textarea {
 }
 
 .task-card:hover {
-  background-color: var(--light-gray2);
+  background-color: var(--surface-2);
 }
 
-.task-card.task-card--completed {
-  background-color: var(--light-gray1);
+.task-card--completed {
+  background-color: var(--bg);
   box-shadow:
-    0 0 0 0.0625em var(--light-gray5) inset,
-    0 -0.375em 0 var(--light-gray2) inset,
-    0 0.25em 0.25em var(--light-gray3);
+    0 0 0 0.0625em var(--surface-5) inset,
+    0 -0.375em 0 var(--surface-2) inset,
+    0 0.25em 0.25em var(--surface-3);
   transform: scale(1.02);
 }
 
-.task-card:has(.task-checkbox__input:focus-visible)::before {
+.task-card:has(.task-checkbox:focus-visible)::before {
   opacity: 1;
 }
 
+/* Checkbox */
 .task-checkbox {
-  position: relative;
-  flex-shrink: 0;
-  width: 1.25em;
-  height: 1.25em;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.task-checkbox__input {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
-  background-color: var(--light-gray1);
-  border-radius: 0.25em;
-  color: var(--light-gray1);
-  box-shadow:
-    0 0 0 0.0625em var(--light-gray7) inset,
-    0 0.25em 0.25em var(--light-gray4) inset;
-  transition:
-    background-color var(--trans-dur),
-    box-shadow var(--trans-dur),
-    transform var(--trans-dur) var(--ease-in-out);
-}
-
-.task-checkbox__input::before {
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="%23fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><polyline points="4 8,7 11,12 5" /></svg>') 0 0 / 100% auto;
-  content: "";
-  display: block;
-  opacity: 0;
-  transition: opacity var(--trans-dur);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  inset: 0;
-}
-
-.task-checkbox__input:checked {
-  background-color: var(--primary3);
-  box-shadow:
-    0 0 0 0.0625em var(--primary4) inset,
-    0 0.125em 0.25em var(--primary2) inset;
-}
-
-.task-checkbox__input:checked::before {
-  opacity: 1;
-}
-
-.task-checkbox__input:focus-visible {
-  outline: 2px solid var(--primary3);
-  outline-offset: 2px;
-}
-
-.task-checkbox__checkmark {
   display: none;
 }
 
+.task-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.375rem;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.task-checkbox-label:hover {
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.task-checkbox-box {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--surface-7);
+  border-radius: 6px;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.task-checkbox-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  transform: scale(0);
+  border-radius: 4px;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.task-checkbox-checkmark {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.3) rotate(20deg);
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.task-checkbox-icon {
+  width: 14px;
+  height: 14px;
+  fill: white;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.task-checkbox-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(16, 185, 129, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.task-checkbox-label:hover .task-checkbox-box {
+  border-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+}
+
+.task-checkbox:checked + .task-checkbox-label .task-checkbox-box {
+  border-color: #10b981;
+  background: #10b981;
+  box-shadow:
+    0 4px 12px rgba(16, 185, 129, 0.3),
+    0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.task-checkbox:checked + .task-checkbox-label .task-checkbox-fill {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.task-checkbox:checked + .task-checkbox-label .task-checkbox-checkmark {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  animation: checkPop 0.3s ease-out 0.2s;
+}
+
+.task-checkbox:checked + .task-checkbox-label .task-checkbox-ripple {
+  animation: rippleSuccess 0.6s ease-out;
+}
+
+.task-checkbox-label:active .task-checkbox-box {
+  transform: scale(0.95);
+}
+
+.task-checkbox--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@keyframes checkPop {
+  0%   { transform: scale(1) rotate(0deg); }
+  50%  { transform: scale(1.2) rotate(-5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes rippleSuccess {
+  0%   { width: 0; height: 0; opacity: 0.6; }
+  70%  { width: 50px; height: 50px; opacity: 0.3; }
+  100% { width: 60px; height: 60px; opacity: 0; }
+}
+
+/* Task content */
 .task-content {
   flex: 1;
   min-width: 0;
@@ -257,7 +442,7 @@ textarea {
 
 .task-title {
   font-weight: 500;
-  color: var(--dark-gray9);
+  color: var(--text-bright);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -266,14 +451,14 @@ textarea {
     color var(--trans-dur);
 }
 
-.task-card.task-card--completed .task-title {
+.task-card--completed .task-title {
   opacity: 0.5;
   text-decoration: line-through;
 }
 
 .task-description {
   font-size: 0.875rem;
-  color: var(--dark-gray1);
+  color: var(--text-muted);
   opacity: 0.75;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -281,10 +466,11 @@ textarea {
   transition: opacity var(--trans-dur);
 }
 
-.task-card.task-card--completed .task-description {
+.task-card--completed .task-description {
   opacity: 0.4;
 }
 
+/* Delete button */
 .task-delete {
   flex-shrink: 0;
   width: 2rem;
@@ -295,7 +481,7 @@ textarea {
   background-color: transparent;
   border: none;
   border-radius: 0.25em;
-  color: var(--light-gray7);
+  color: var(--surface-7);
   cursor: pointer;
   opacity: 0;
   transition:
@@ -314,65 +500,106 @@ textarea {
   color: #dc2626;
 }
 
+.task-delete__icon {
+  width: 1rem;
+  height: 1rem;
+}
+
 .task-delete:focus-visible {
-  outline: 2px solid var(--primary3);
+  outline: 2px solid var(--accent-3);
   outline-offset: 2px;
 }
 
-/* Dark theme */
-@media (prefers-color-scheme: dark) {
-  body {
-    color: var(--light-gray1);
-  }
+/* ==========================================================================
+   7. Task List
+   ========================================================================== */
 
-  .task-card {
-    background-color: var(--dark-gray5);
-    box-shadow:
-      0 0 0 0.0625em var(--dark-gray4) inset,
-      0 0 0 var(--dark-gray4) inset,
-      0 0 0 var(--dark-gray7);
-  }
-
-  .task-card::before {
-    box-shadow: 0 0 0 0.125em var(--primary2);
-  }
-
-  .task-card:hover {
-    background-color: var(--dark-gray4);
-  }
-
-  .task-card.task-card--completed {
-    background-color: var(--dark-gray3);
-    box-shadow:
-      0 0 0 0.0625em var(--dark-gray4) inset,
-      0 -0.375em 0 var(--dark-gray4) inset,
-      0 0.25em 0.25em var(--dark-gray7);
-  }
-
-  .task-checkbox__input {
-    background-color: var(--dark-gray4);
-    box-shadow:
-      0 0 0 0.0625em var(--dark-gray8) inset,
-      0 0.25em 0.25em var(--dark-gray6) inset;
-  }
-
-  .task-checkbox__input:checked {
-    background-color: var(--primary2);
-    box-shadow:
-      0 0 0 0.0625em var(--primary5) inset,
-      0 0.125em 0.25em var(--primary1) inset;
-  }
-
-  .task-title {
-    color: var(--light-gray1);
-  }
-
-  .task-description {
-    color: var(--light-gray2);
-  }
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
 }
 
-/* Layout Alignment */
+.task-list__loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.task-list__spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 4px solid var(--accent-3);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.task-list__empty {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.task-list__empty-title {
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+.task-list__empty-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-faint);
+}
+
+/* ==========================================================================
+   8. Edit Mode
+   ========================================================================== */
+
+.task-card--edit {
+  background-color: var(--surface-4);
+  border: 2px solid var(--accent-3);
+  padding: 0.75rem;
+}
+
+.task-edit-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.task-edit-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--accent-4);
+  border-radius: 0.25rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text);
+  background-color: var(--bg);
+  transition: border-color var(--trans-dur) var(--ease-bounce);
+}
+
+.task-edit-input:focus {
+  outline: none;
+  border-color: var(--accent-3);
+  box-shadow: 0 0 0 2px var(--accent-5);
+}
+
+.task-edit-input--title {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+   9. Layout Alignment
+   ========================================================================== */
+
 .layout-left {
   display: flex;
   flex-direction: column;
@@ -385,32 +612,19 @@ textarea {
   align-items: flex-end;
 }
 
-.layout-left .space-y-3,
-.layout-right .space-y-3 {
+.layout-left .task-list,
+.layout-right .task-list {
   width: 100%;
 }
 
-.layout-left form,
-.layout-right form {
-  width: 100%;
-  max-width: 500px;
-}
-
-/* Checkbox position based on layout */
-.layout-left .task-card {
-  flex-direction: row;
-}
-
-.layout-right .task-card {
-  flex-direction: row;
-}
-
-.layout-right .task-checkbox {
+.layout-right .task-checkbox-label {
   order: 2;
 }
 
 .layout-right .task-content {
   order: 1;
+  text-align: right;
+  align-items: flex-end;
 }
 
 .layout-right .task-delete {
