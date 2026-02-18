@@ -11,9 +11,11 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - ALLOWED_ORIGINS=http://localhost:5173,http://localhost,http://client:5173
+      - DB_PATH=/app/data/tasks.db
     volumes:
       - ./server:/app/server
       - /app/server/node_modules
+      - server_data:/app/data
     command: npm --prefix server start
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
@@ -40,5 +42,6 @@ services:
     tty: true
 
 volumes:
+  server_data:
   server_node_modules:
   client_node_modules:

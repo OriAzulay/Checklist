@@ -37,5 +37,9 @@ node_modules/
 .turbo/
 .cache/
 
+# Database
+server/data/
+server/backups/
+
 # Docker
 .dockerignore
